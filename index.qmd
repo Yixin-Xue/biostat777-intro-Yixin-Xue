@@ -1,18 +1,52 @@
 ---
-title: "Welcome!"
+title: "Home"
 ---
 
-# Yixin Xue
+<!-- 页面专用样式 -->
+<style>
+  .intro-row {
+    display: flex;
+    align-items: flex-start;          /* 顶部对齐 */
+    justify-content: flex-start;
+    gap: 0px;                        /* 图片与文字间距 */
+    max-width: 1000px;                /* 整体宽度 */
+    margin: 0 auto 40px;              /* 居中 + 下方留白 */
+    padding: 20px;
+  }
 
-::: {.container style="display: flex; align-items: flex-start; justify-content: center; gap: 30px;"}
+  .intro-img {
+    width: 60%;                       /* 图片宽度 */
+    border-radius: 20px;
+    margin: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.1);
+  }
 
-<img src="images/me.jpg" alt="Yixin baking bread rolls" width="40%" style="border-radius: 12px; margin-top: 0;"/>
+  .intro-text {
+    max-width: 130%;                   /* 右侧内容宽度 */
+    font-size: 1.2em;                 /* 字体放大 */
+    line-height: 1.8;                 /* 行距舒适 */
+  }
 
-<div style="max-width: 45%;">
-Hello Everyone! I am a first year MHS student in Health, Behavior and Society.  
-My research interests focus on data-driven policy analysis to address health inequities  
-and improve outcomes for marginalized populations.  
-In my free time, I enjoy exploring esports, spending time outdoors, and baking.
+  /* 手机端布局自动改为上下排 */
+  @media (max-width: 900px) {
+    .intro-row { flex-direction: column; gap: 12px; }
+    .intro-img { width: 100%; max-width: 420px; }
+    .intro-text { max-width: none; }
+  }
+</style>
+
+# <span style="font-family:'Brush Script MT', cursive; font-size: 2.4em; color:#1b3a57;">Welcome!</span>
+
+## <span style="display:inline-block; padding-left:5px;">Yixin Xue</span>
+
+::: {.intro-row}
+<img src="images/me.jpg" alt="Yixin baking bread rolls" class="intro-img" />
+
+<div class="intro-text">
+  <br>
+💙 Hello Everyone!  
+📖 I am a first year MHS student in Health, Behavior and Society.  
+🌏 My hometown is Shanghai, China.  
+🥐 In my free time, I enjoy exploring esports, spending time outdoors, and baking.
 </div>
-
 :::

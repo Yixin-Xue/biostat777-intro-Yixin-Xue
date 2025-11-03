@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Welcome! – biostat777-intro-yixin-xue</title>
+<title>Home – biostat777-intro-yixin-xue</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -120,7 +120,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#yixin-xue" id="toc-yixin-xue" class="nav-link active" data-scroll-target="#yixin-xue">Yixin Xue</a></li>
+  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome"><span style="font-family:'Brush Script MT', cursive; font-size: 2.4em; color:#1b3a57;">Welcome!</span></a>
+  <ul class="collapse">
+  <li><a href="#yixin-xue" id="toc-yixin-xue" class="nav-link" data-scroll-target="#yixin-xue"><span style="display:inline-block; padding-left:5px;">Yixin Xue</span></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -129,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Welcome!</h1>
+<h1 class="title">Home</h1>
 </div>
 
 
@@ -146,19 +149,54 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="yixin-xue" class="level1">
-<h1>Yixin Xue</h1>
-<div class="container" style="display: flex; align-items: flex-start; justify-content: center; gap: 30px;">
-<p><img src="images/me.jpg" alt="Yixin baking bread rolls" width="40%" style="border-radius: 12px; margin-top: 0;"></p>
-<div style="max-width: 45%;">
-<p>Hello Everyone! I am a first year MHS student in Health, Behavior and Society.<br>
-My research interests focus on data-driven policy analysis to address health inequities<br>
-and improve outcomes for marginalized populations.<br>
-In my free time, I enjoy exploring esports, spending time outdoors, and baking.</p>
+<!-- 页面专用样式 -->
+<style>
+  .intro-row {
+    display: flex;
+    align-items: flex-start;          /* 顶部对齐 */
+    justify-content: flex-start;
+    gap: 0px;                        /* 图片与文字间距 */
+    max-width: 1000px;                /* 整体宽度 */
+    margin: 0 auto 40px;              /* 居中 + 下方留白 */
+    padding: 20px;
+  }
+
+  .intro-img {
+    width: 60%;                       /* 图片宽度 */
+    border-radius: 20px;
+    margin: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.1);
+  }
+
+  .intro-text {
+    max-width: 130%;                   /* 右侧内容宽度 */
+    font-size: 1.2em;                 /* 字体放大 */
+    line-height: 1.8;                 /* 行距舒适 */
+  }
+
+  /* 手机端布局自动改为上下排 */
+  @media (max-width: 900px) {
+    .intro-row { flex-direction: column; gap: 12px; }
+    .intro-img { width: 100%; max-width: 420px; }
+    .intro-text { max-width: none; }
+  }
+</style>
+<section id="welcome" class="level1">
+<h1><span style="font-family:'Brush Script MT', cursive; font-size: 2.4em; color:#1b3a57;">Welcome!</span></h1>
+<section id="yixin-xue" class="level2">
+<h2 class="anchored" data-anchor-id="yixin-xue"><span style="display:inline-block; padding-left:5px;">Yixin Xue</span></h2>
+<div class="intro-row">
+<p><img src="images/me.jpg" alt="Yixin baking bread rolls" class="intro-img"></p>
+<div class="intro-text">
+<p><br> 💙 Hello Everyone!<br>
+📖 I am a first year MHS student in Health, Behavior and Society.<br>
+🌏 My hometown is Shanghai, China.<br>
+🥐 In my free time, I enjoy exploring esports, spending time outdoors, and baking.</p>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
