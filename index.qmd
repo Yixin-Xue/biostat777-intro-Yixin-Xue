@@ -4,9 +4,9 @@ title: "Welcome!"
 
 # Yixin Xue
 
-::: {.container style="display: flex; align-items: center; justify-content: center; gap: 30px;"}
+::: {.container style="display: flex; align-items: flex-start; justify-content: center; gap: 30px;"}
 
-![Something I enjoy](images/me.jpg){fig-alt="Yixin baking bread rolls" width="40%" style="border-radius: 12px;"}
+<img src="images/me.jpg" alt="Yixin baking bread rolls" width="40%" style="border-radius: 12px; margin-top: 0;"/>
 
 <div style="max-width: 45%;">
 Hello Everyone! I am a first year MHS student in Health, Behavior and Society.  
