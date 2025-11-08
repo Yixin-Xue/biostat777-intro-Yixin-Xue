@@ -68,6 +68,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -138,32 +139,31 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<!-- 页面专用样式 -->
 <style>
   .intro-row {
     display: flex;
-    align-items: flex-start;          /* 顶部对齐 */
+    align-items: flex-start;         
     justify-content: flex-start;
-    gap: 0px;                        /* 图片与文字间距 */
-    max-width: 1000px;                /* 整体宽度 */
-    margin: 0 auto 40px;              /* 居中 + 下方留白 */
+    gap: 0px;                      
+    max-width: 1000px;             
+    margin: 0 auto 40px;            
     padding: 20px;
   }
 
   .intro-img {
-    width: 60%;                       /* 图片宽度 */
+    width: 60%;                      
     border-radius: 20px;
     margin: 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,.1);
   }
 
   .intro-text {
-    max-width: 130%;                   /* 右侧内容宽度 */
-    font-size: 1.2em;                 /* 字体放大 */
-    line-height: 1.8;                 /* 行距舒适 */
+    max-width: 130%;                  
+    font-size: 1.2em;                
+    line-height: 1.8;               
   }
 
-  /* 手机端布局自动改为上下排 */
+ 
   @media (max-width: 900px) {
     .intro-row { flex-direction: column; gap: 12px; }
     .intro-img { width: 100%; max-width: 420px; }
@@ -594,4 +594,5 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

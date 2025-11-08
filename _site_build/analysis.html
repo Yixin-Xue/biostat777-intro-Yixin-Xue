@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>analysis – biostat777-intro-yixin-xue</title>
+<title>Example Analysis – biostat777-intro-yixin-xue</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -68,12 +123,13 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -115,17 +171,594 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a>
+  <ul class="collapse">
+  <li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question">1. Research Question</a></li>
+  <li><a href="#intended-audience" id="toc-intended-audience" class="nav-link" data-scroll-target="#intended-audience">2. Intended Audience</a></li>
+  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source">3. Data Source</a></li>
+  </ul></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data Preparation</a>
+  <ul class="collapse">
+  <li><a href="#data-dictionary" id="toc-data-dictionary" class="nav-link" data-scroll-target="#data-dictionary">1. Data Dictionary</a></li>
+  <li><a href="#data-cleaning-and-standardization" id="toc-data-cleaning-and-standardization" class="nav-link" data-scroll-target="#data-cleaning-and-standardization">2. Data Cleaning and Standardization</a></li>
+  </ul></li>
+  <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#main-effects-sex-and-bmi-on-diabetes-rate" id="toc-main-effects-sex-and-bmi-on-diabetes-rate" class="nav-link" data-scroll-target="#main-effects-sex-and-bmi-on-diabetes-rate">1. Main Effects: Sex and BMI on Diabetes Rate</a></li>
+  <li><a href="#interaction-between-sex-and-bmi" id="toc-interaction-between-sex-and-bmi" class="nav-link" data-scroll-target="#interaction-between-sex-and-bmi">2. Interaction Between Sex and BMI</a></li>
+  <li><a href="#statistical-testing-two-way-anova-f-test" id="toc-statistical-testing-two-way-anova-f-test" class="nav-link" data-scroll-target="#statistical-testing-two-way-anova-f-test">3. Statistical Testing: Two-Way ANOVA (F-Test)</a></li>
+  </ul></li>
+  <li><a href="#summary-of-findings" id="toc-summary-of-findings" class="nav-link" data-scroll-target="#summary-of-findings">Summary of Findings</a></li>
+  <li><a href="#functions-used" id="toc-functions-used" class="nav-link" data-scroll-target="#functions-used">Functions Used</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Example Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+  .figure{
+    display: block
+  }
+</style>
+<section id="background" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<section id="research-question" class="level3">
+<h3 class="anchored" data-anchor-id="research-question">1. Research Question</h3>
+<p>Diabetes is a major public health concern in the United States, affecting more than 37 million Americans—approximately 1 in 10 adults—and its prevalence continues to rise alongside increases in obesity rates. Body Mass Index (BMI) is widely recognized as a strong predictor of diabetes risk, but this relationship may not be uniform across demographic groups. In particular, sex differences in biological factors, health behaviors, and healthcare access may modify how BMI contributes to diabetes risk. Therefore, this analysis seeks to investigate how BMI and sex are associated with the likelihood of having diabetes, and whether the association between BMI and diabetes differs between males and females. By examining both main effects and the BMI-by-sex interaction, this study aims to clarify whether BMI influences diabetes risk differently across sex groups.</p>
+<div class="figure" style="text-align: center">
+<img src="figure/diabetes-image-1.png" alt="Figure 1. Word cloud of key concepts related to diabetes.">
+<p class="caption">
+Figure 1. Word cloud of key concepts related to diabetes.
+</p>
+</div>
+</section>
+<section id="intended-audience" class="level3">
+<h3 class="anchored" data-anchor-id="intended-audience">2. Intended Audience</h3>
+<p>The intended audience includes students, researchers, and public health professionals who are interested in understanding how statistical data analysis can inform health policy and resource allocation decisions. Because diabetes prevention and management require substantial healthcare spending and targeted community health interventions, identifying population subgroups with elevated risk is essential for designing effective programs. This analysis demonstrates how reproducible data workflows and regression-based interpretation can support evidence-based decisions, guide early screening priorities, and highlight where prevention efforts may need to be adapted for different demographic groups.</p>
+</section>
+<section id="data-source" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="data-source">3. Data Source</h3>
+<p>The data used in this analysis originate from the Behavioral Risk Factor Surveillance System (BRFSS), a health-related telephone survey administered annually by the U.S. Centers for Disease Control and Prevention (CDC). BRFSS is the largest continuously conducted health survey system in the world, collecting responses from over 400,000 adults each year on topics including health behaviors, chronic conditions, and preventive care usage. The survey has been conducted since 1984, and its highly standardized methodology makes it a key dataset for U.S. public health surveillance. For this project, a processed and publicly accessible version of the 2015 BRFSS dataset was obtained from Kaggle (Diabetes Health Indicators Dataset). The original 2015 BRFSS dataset contains responses from 441,455 individuals and includes 330 variables, representing either direct survey responses or derived indicators <span class="citation" data-cites="KaggleDiabetes">(<a href="#ref-KaggleDiabetes" role="doc-biblioref"><em>Diabetes Health Indicators Dataset</em>, n.d.</a>)</span>.<br>
+<strong>Link to data:</strong> https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><strong>Quick note</strong><br>
+- Largest ongoing US health survey (~400k adults/yr).<br>
+- 2015 subset used here: <em>Diabetes Health Indicators</em> <span class="citation" data-cites="KaggleDiabetes">(<a href="#ref-KaggleDiabetes" role="doc-biblioref"><em>Diabetes Health Indicators Dataset</em>, n.d.</a>)</span>.<br>
+- Key vars: diabetes (Yes/No), BMI (kg/m²), sex (Female/Male).<br>
+- We filter BMI to [10, 80] and form 4 groups.</p>
+</div></div></section>
+</section>
+<section id="data-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-preparation">Data Preparation</h2>
+<section id="data-dictionary" class="level3">
+<h3 class="anchored" data-anchor-id="data-dictionary">1. Data Dictionary</h3>
+<p>The table below describes the core variables used in this analysis after standardization. In later steps, variable names will be harmonized to ensure consistency across modeling and visualization <span class="citation" data-cites="Adu2019">(<a href="#ref-Adu2019" role="doc-biblioref">Adu et al., 2019</a>)</span>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data_dictionary <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>Variable,   <span class="sc">~</span>Type,        <span class="sc">~</span>Units_or_Values,                 <span class="sc">~</span>Description, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"diabetes"</span>,   <span class="st">"Binary"</span>,     <span class="st">"No / Yes"</span>,                       <span class="st">"Indicator of diabetes status (1 = diabetes, 0 = no diabetes), standardized to factor with levels No/Yes."</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"bmi"</span>,        <span class="st">"Numeric"</span>,    <span class="st">"kg/m^2"</span>,                         <span class="st">"Body Mass Index, calculated from height and weight, treated as a continuous predictor."</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sex"</span>,        <span class="st">"Categorical"</span>,<span class="st">"Female / Male"</span>,                  <span class="st">"Biological sex, standardized to a factor with two levels: Female and Male."</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(data_dictionary, <span class="at">align =</span> <span class="st">"l"</span>, <span class="at">caption =</span> <span class="st">"Table1. Standardized Variable Definitions"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top table">
+<caption>Table1. Standardized Variable Definitions</caption>
+<colgroup>
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 73%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Units_or_Values</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">diabetes</td>
+<td style="text-align: left;">Binary</td>
+<td style="text-align: left;">No / Yes</td>
+<td style="text-align: left;">Indicator of diabetes status (1 = diabetes, 0 = no diabetes), standardized to factor with levels No/Yes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bmi</td>
+<td style="text-align: left;">Numeric</td>
+<td style="text-align: left;">kg/m^2</td>
+<td style="text-align: left;">Body Mass Index, calculated from height and weight, treated as a continuous predictor.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sex</td>
+<td style="text-align: left;">Categorical</td>
+<td style="text-align: left;">Female / Male</td>
+<td style="text-align: left;">Biological sex, standardized to a factor with two levels: Female and Male.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="data-cleaning-and-standardization" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning-and-standardization">2. Data Cleaning and Standardization</h3>
+<p>This section prepares the dataset for analysis by standardizing key variables and removing implausible values.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>df_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/diabetes.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>pick_col <span class="ot">&lt;-</span> <span class="cf">function</span>(df, candidates) {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  nms <span class="ot">&lt;-</span> <span class="fu">names</span>(df)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  idx <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">detect_index</span>(candidates, <span class="sc">~</span> <span class="fu">any</span>(<span class="fu">tolower</span>(nms) <span class="sc">==</span> <span class="fu">tolower</span>(.x)))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (idx <span class="sc">==</span> <span class="dv">0</span>) <span class="cn">NA_character_</span> <span class="cf">else</span> candidates[[idx]]</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>bmi_name <span class="ot">&lt;-</span> <span class="fu">pick_col</span>(df_raw, <span class="fu">c</span>(<span class="st">"BMI"</span>,<span class="st">"bmi"</span>))</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>sex_name <span class="ot">&lt;-</span> <span class="fu">pick_col</span>(df_raw, <span class="fu">c</span>(<span class="st">"Sex"</span>,<span class="st">"sex"</span>,<span class="st">"Gender"</span>,<span class="st">"gender"</span>))</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>dia_name <span class="ot">&lt;-</span> <span class="fu">pick_col</span>(df_raw, <span class="fu">c</span>(<span class="st">"Diabetes_binary"</span>,<span class="st">"diabetes_binary"</span>,<span class="st">"diabetes_012"</span>,<span class="st">"diabetes"</span>))</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>recode_diabetes <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">case_when</span>(x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Yes"</span>, x <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"No"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    x_chr <span class="ot">&lt;-</span> <span class="fu">tolower</span>(<span class="fu">as.character</span>(x))</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">case_when</span>(</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>      x_chr <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>,<span class="st">"yes"</span>,<span class="st">"true"</span>,<span class="st">"diabetic"</span>) <span class="sc">~</span> <span class="st">"Yes"</span>,</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>      x_chr <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"no"</span>,<span class="st">"false"</span>,<span class="st">"non-diabetic"</span>,<span class="st">"non diabetic"</span>) <span class="sc">~</span> <span class="st">"No"</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>recode_sex <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.numeric</span>(x)) {</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">case_when</span>(x <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"Female"</span>, x <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Male"</span>, <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    x_chr <span class="ot">&lt;-</span> <span class="fu">str_trim</span>(<span class="fu">tolower</span>(<span class="fu">as.character</span>(x)))</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">case_when</span>(</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>      x_chr <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"f"</span>,<span class="st">"female"</span>,<span class="st">"woman"</span>,<span class="st">"women"</span>) <span class="sc">~</span> <span class="st">"Female"</span>,</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>      x_chr <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"m"</span>,<span class="st">"male"</span>,<span class="st">"man"</span>,<span class="st">"men"</span>) <span class="sc">~</span> <span class="st">"Male"</span>,</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>prep <span class="ot">&lt;-</span> df_raw <span class="sc">%&gt;%</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">bmi =</span> <span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(.data[[bmi_name]])),</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">factor</span>(<span class="fu">recode_sex</span>(.data[[sex_name]]), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Female"</span>,<span class="st">"Male"</span>)),</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">diabetes =</span> <span class="fu">factor</span>(<span class="fu">recode_diabetes</span>(.data[[dia_name]]), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"No"</span>,<span class="st">"Yes"</span>))</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>clean <span class="ot">&lt;-</span> prep <span class="sc">%&gt;%</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(bmi <span class="sc">&gt;=</span> <span class="dv">10</span>, bmi <span class="sc">&lt;=</span> <span class="dv">80</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(diabetes, bmi, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">diabetes =</span> diabetes,</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">bmi =</span> <span class="fu">as.numeric</span>(bmi),</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">droplevels</span>(sex),</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">bmi_group =</span> <span class="fu">cut</span>(</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>      bmi,</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">18.5</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="cn">Inf</span>),</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Underweight"</span>,<span class="st">"Normal"</span>,<span class="st">"Overweight"</span>,<span class="st">"Obesity"</span>),</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>      <span class="at">right =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>clean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>## # A tibble: 253,401 × 4
+##    diabetes   bmi sex    bmi_group 
+##    &lt;fct&gt;    &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;     
+##  1 No          40 Female Obesity   
+##  2 No          25 Female Overweight
+##  3 No          28 Female Overweight
+##  4 No          27 Female Overweight
+##  5 No          24 Female Normal    
+##  6 No          25 Male   Overweight
+##  7 No          30 Female Obesity   
+##  8 No          25 Female Overweight
+##  9 Yes         30 Female Obesity   
+## 10 No          24 Male   Normal    
+## # ℹ 253,391 more rows</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>##  diabetes          bmi            sex               bmi_group    
+##  No :218096   Min.   :12.00   Female:141772   Underweight: 3127  
+##  Yes: 35305   1st Qu.:24.00   Male  :111629   Normal     :68953  
+##               Median :27.00                   Overweight :93749  
+##               Mean   :28.32                   Obesity    :87572  
+##               3rd Qu.:31.00                                      
+##               Max.   :80.00</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>## [1] 253401</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clean<span class="sc">$</span>bmi_group)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>## 
+## Underweight      Normal  Overweight     Obesity 
+##        3127       68953       93749       87572</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Why trim BMI to [10, 80]?</strong><br>
+Extreme BMI values in BRFSS are rare and typically reflect entry or recall errors.<br>
+Trimming to a plausible range reduces leverage from outliers and stabilizes group summaries, without materially changing the distribution inside each BMI category.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="data-analysis" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="data-analysis">Data Analysis</h2>
+<section id="main-effects-sex-and-bmi-on-diabetes-rate" class="level3">
+<h3 class="anchored" data-anchor-id="main-effects-sex-and-bmi-on-diabetes-rate">1. Main Effects: Sex and BMI on Diabetes Rate</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This section focuses on the main effects of sex and BMI on diabetes prevalence. We first compare diabetes rates between females and males to determine whether sex alone is associated with differences in diabetes risk. Then, we examine how diabetes prevalence varies across BMI categories, allowing us to see how increasing body weight relates to the likelihood of having diabetes. These exploratory visualizations provide a clear foundation for understanding each factor’s independent contribution before considering more complex relationships.</p>
+</div>
+</div>
+<section id="sex" class="level4">
+<h4 class="anchored" data-anchor-id="sex">1.1 Sex</h4>
+<p>We compare diabetes prevalence between females and males using a bar chart. This visualization highlights the main effect of sex on diabetes risk by showing the proportion of individuals diagnosed with diabetes in each group <span class="citation" data-cites="KautzkyWiller2016">(<a href="#ref-KautzkyWiller2016" role="doc-biblioref">Kautzky-Willer et al., 2016</a>)</span>.</p>
+<div class="figure" style="text-align: center">
+<img src="figure/unnamed-chunk-3-1.png" alt="Figure 2. Diabetes prevalence by sex.">
+<p class="caption">
+Figure 2. Diabetes prevalence by sex.
+</p>
+</div>
+</section>
+<section id="bmi" class="level4">
+<h4 class="anchored" data-anchor-id="bmi">1.2 BMI</h4>
+<p>Similarly, we compare diabetes prevalence across four BMI categories using a bar chart <span class="citation" data-cites="Zhao2021">(<a href="#ref-Zhao2021" role="doc-biblioref">Zhao et al., 2021</a>)</span>.</p>
+<div class="figure" style="text-align: center">
+<img src="figure/unnamed-chunk-4-1.png" alt="Figure 3. Diabetes prevalence across BMI categories.">
+<p class="caption">
+Figure 3. Diabetes prevalence across BMI categories.
+</p>
+</div>
+</section>
+<section id="interpretation-of-main-effects" class="level4">
+<h4 class="anchored" data-anchor-id="interpretation-of-main-effects">1.3 Interpretation of Main Effects</h4>
+<p>The bar chart comparing diabetes rate by sex indicates that males have a higher prevalence of diabetes (15.2%) than females (13.0%). Although the difference is not extremely large, it is consistent with findings in epidemiological literature suggesting that men tend to exhibit greater metabolic risk profiles, potentially due to higher visceral fat accumulation and lower health-seeking behavior. The plot of diabetes rate by BMI category shows a clear monotonic increasing trend. Individuals classified as Underweight and Normal weight have similarly low diabetes rates (5.4% and 5.7%, respectively). The prevalence increases noticeably in the Overweight group (11.4%), and rises sharply among those with Obesity (23.4%), more than four times the rate observed in the normal-weight population. These results suggest that BMI is a strong predictor of diabetes risk, with the association showing a dose–response pattern. Compared to BMI, sex exhibits a weaker but still visible main effect. This suggests that body weight status is a more influential determinant of diabetes prevalence in this dataset.</p>
+</section>
+</section>
+<section id="interaction-between-sex-and-bmi" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="interaction-between-sex-and-bmi">2. Interaction Between Sex and BMI</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This section examines whether the relationship between BMI and diabetes differs between males and females. We first inspect the distribution of BMI across sex groups to evaluate potential structural differences. Then, we assess whether diabetes prevalence varies jointly by sex and BMI, providing visual and statistical evidence of an interaction effect.</p>
+</div>
+</div>
+<section id="bmi-distribution-by-sex" class="level4">
+<h4 class="anchored" data-anchor-id="bmi-distribution-by-sex">2.1 BMI Distribution by Sex</h4>
+<p>We compare BMI distributions between females and males using boxplots to examine whether the two groups differ in average BMI or variability. This helps us assess whether sex-related differences in BMI may contribute to differences in diabetes risk and ensures that BMI is on a comparable scale across groups before modeling.</p>
+<div class="figure" style="text-align: center">
+<img src="figure/bmi_boxplot-1.png" alt="Figure 4. BMI distribution by sex.">
+<p class="caption">
+Figure 4. BMI distribution by sex.
+</p>
+</div>
+</section>
+<section id="bmi-distribution-across-bmi-categories-faceted-by-sex" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="bmi-distribution-across-bmi-categories-faceted-by-sex">2.2 BMI Distribution Across BMI Categories, Faceted by Sex</h4>
+<p>This faceted boxplot displays BMI distributions for females and males across the four BMI categories. Each panel represents one sex, showing how BMI values vary within each group. This provides structural context on BMI composition before examining its relationship with diabetes.</p>
+<div class="column-page">
+<div class="figure" style="text-align: center">
+<img src="figure/box-bmi-sex-facet-1.png" alt="Figure 5. BMI distribution across BMI categories, faceted by sex.">
+<p class="caption">
+Figure 5. BMI distribution across BMI categories, faceted by sex.
+</p>
+</div>
+</div>
+</section>
+<section id="interaction-plot-diabetes-rate-across-sex-bmi-groups" class="level4">
+<h4 class="anchored" data-anchor-id="interaction-plot-diabetes-rate-across-sex-bmi-groups">2.3 Interaction Plot: Diabetes Rate Across Sex × BMI Groups</h4>
+<p>This is an interaction line plot. It shows how diabetes prevalence changes across BMI categories separately for females and males. If the two lines are not parallel, this indicates a Sex × BMI interaction — meaning the effect of BMI on diabetes risk differs by sex.</p>
+<div class="figure" style="text-align: center">
+<img src="figure/inter-line-1.png" alt="Figure 6. Diabetes rate across BMI categories by sex (interaction plot).">
+<p class="caption">
+Figure 6. Diabetes rate across BMI categories by sex (interaction plot).
+</p>
+</div>
+</section>
+<section id="interpratation-of-interaction" class="level4">
+<h4 class="anchored" data-anchor-id="interpratation-of-interaction">2.4 Interpratation of Interaction</h4>
+<p>Figure 3 compares BMI distributions between females and males and shows that males generally have slightly higher BMI and a wider spread, indicating baseline structural differences between sex groups. Figure 4 further breaks BMI down into four BMI categories and facets the distributions by sex, showing that even within the same BMI category, males and females differ in median BMI and variability. This means that being in the same BMI group does not imply identical BMI profiles across sexes. Figure 5 then examines diabetes prevalence across BMI categories for each sex. Both groups show increasing diabetes rates with higher BMI, but the slopes differ, suggesting that the strength of the BMI–diabetes relationship is not the same for males and females.</p>
+<p>Overall, the three figures support the presence of a Sex × BMI interaction. Sex groups differ not only in their overall BMI levels, but also in how BMI is distributed within BMI categories, and ultimately, in how BMI relates to diabetes risk. Because the relationship between BMI and diabetes is steeper for one sex than the other, the effect of BMI on diabetes cannot be assumed to be uniform across sexes. Therefore, statistical modeling should include an interaction term to accurately capture this joint effect.</p>
+</section>
+</section>
+<section id="statistical-testing-two-way-anova-f-test" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-testing-two-way-anova-f-test">3. Statistical Testing: Two-Way ANOVA (F-Test)</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While the descriptive plots show that diabetes prevalence tends to be higher among males than females, and increases substantially across BMI categories, visual interpretation alone does not establish whether these differences are statistically meaningful. To determine whether the observed patterns reflect true population-level effects rather than random sample variation, we apply a two-way ANOVA (F-test) with sex and BMI group as factors. This allows us to simultaneously test the main effect of sex, the main effect of BMI category, and the Sex × BMI interaction, which assesses whether the influence of BMI on diabetes prevalence differs between males and females. Conducting this inferential test provides a rigorous basis for evaluating whether the trends suggested by the exploratory visualizations represent statistically significant relationships.</p>
+</div>
+</div>
+<section id="model-specification-and-anova-output" class="level4">
+<h4 class="anchored" data-anchor-id="model-specification-and-anova-output">3.1 Model Specification and ANOVA Output</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>dat_anova <span class="ot">&lt;-</span> clean <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">transmute</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="at">diabetes_num =</span> <span class="fu">as.numeric</span>(diabetes <span class="sc">==</span> <span class="st">"Yes"</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="at">sex =</span> <span class="fu">factor</span>(sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Female"</span>,<span class="st">"Male"</span>)),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at">bmi_group =</span> <span class="fu">factor</span>(bmi_group, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Underweight"</span>,<span class="st">"Normal"</span>,<span class="st">"Overweight"</span>,<span class="st">"Obesity"</span>))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">na.omit</span>()</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>fit_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(diabetes_num <span class="sc">~</span> sex <span class="sc">*</span> bmi_group, <span class="at">data =</span> dat_anova)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_aov)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>##                   Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## sex                1     30    30.0  261.69 &lt;2e-16 ***
+## bmi_group          3   1319   439.6 3837.32 &lt;2e-16 ***
+## sex:bmi_group      3      9     3.0   26.34 &lt;2e-16 ***
+## Residuals     253393  29028     0.1                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit_aov)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: diabetes_num
+##                   Df  Sum Sq Mean Sq  F value    Pr(&gt;F)    
+## sex                1    30.0   29.98  261.695 &lt; 2.2e-16 ***
+## bmi_group          3  1318.8  439.60 3837.323 &lt; 2.2e-16 ***
+## sex:bmi_group      3     9.1    3.02   26.339 &lt; 2.2e-16 ***
+## Residuals     253393 29028.3    0.11                       
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</section>
+<section id="two-way-anova-summary-table" class="level4">
+<h4 class="anchored" data-anchor-id="two-way-anova-summary-table">3.2 Two-Way ANOVA Summary Table</h4>
+<table class="table" style="font-size: 18px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+Table 2. Two-way ANOVA Summary for Diabetes Prevalence
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;">
+Term
+</th>
+<th style="text-align:right;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;">
+Df
+</th>
+<th style="text-align:right;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;">
+Sum Sq
+</th>
+<th style="text-align:right;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;">
+Mean Sq
+</th>
+<th style="text-align:right;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;">
+F value
+</th>
+<th style="text-align:right;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;">
+Pr(&gt;F)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A: Sex
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+29.9794
+</td>
+<td style="text-align:right;">
+29.979421
+</td>
+<td style="text-align:right;">
+261.70
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B: BMI group
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1318.7937
+</td>
+<td style="text-align:right;">
+439.597893
+</td>
+<td style="text-align:right;">
+3837.32
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A × B
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+9.0519
+</td>
+<td style="text-align:right;">
+3.017306
+</td>
+<td style="text-align:right;">
+26.34
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Residuals
+</td>
+<td style="text-align:right;">
+253393
+</td>
+<td style="text-align:right;">
+29028.3190
+</td>
+<td style="text-align:right;">
+0.114558
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+253400
+</td>
+<td style="text-align:right;">
+30386.1440
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="interpretation-of-results" class="level4">
+<h4 class="anchored" data-anchor-id="interpretation-of-results">3.3 Interpretation of Results</h4>
+<p>The two-way ANOVA results show that both sex and BMI group have statistically significant main effects on diabetes prevalence (p &lt; 0.001), confirming that males exhibit higher diabetes rates than females and that diabetes risk increases sharply across BMI categories. Importantly, although the interaction plot suggested largely parallel trends across sexes—implying no strong visual interaction—the ANOVA indicates that the Sex × BMI interaction is statistically significant (p &lt; 0.001). This means that the influence of BMI on diabetes risk differs slightly between males and females, even if the difference was not visually prominent. However, the magnitude of this interaction is much smaller than the main effect of BMI, which remains the dominant predictor. Overall, these findings indicate that BMI strongly drives diabetes risk, sex has a smaller but meaningful effect, and the relationship between BMI and diabetes varies modestly by sex—justifying the inclusion of both main effects and the interaction term in further modeling.</p>
+</section>
+</section>
+</section>
+<section id="summary-of-findings" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-findings">Summary of Findings</h2>
+<p>In summary, this analysis examined how sex and BMI are associated with diabetes prevalence and whether these factors interact in shaping diabetes risk. Both descriptive visualizations and two-way ANOVA results showed that BMI is a strong predictor of diabetes, with prevalence rising sharply from normal weight to obesity categories. Sex also demonstrated a significant, though smaller, main effect, with males exhibiting higher rates of diabetes than females. Additionally, a statistically significant Sex × BMI interaction indicates that the strength of the BMI–diabetes relationship differs slightly between males and females. Overall, these findings suggest that weight status plays the primary role in diabetes risk, but sex-specific differences should be acknowledged when designing screening guidelines and public health interventions.</p>
+</section>
+<section id="functions-used" class="level2">
+<h2 class="anchored" data-anchor-id="functions-used">Functions Used</h2>
+<p><strong>dplyr</strong><br>
+- <code>mutate()</code> — create/transform variables<br>
+- <code>group_by()</code> — group data for summaries<br>
+- <code>summarize()</code> — compute grouped summaries<br>
+- <code>transmute()</code> — keep only transformed variables<br>
+- <code>filter()</code> — row filtering<br>
+- <code>case_when()</code> — conditional recoding<br>
+- <code>recode()</code> — relabel factor/character values</p>
+<p><strong>tidyr</strong><br>
+- <code>drop_na()</code> — remove rows with missing values</p>
+<p><strong>ggplot2</strong><br>
+- <code>ggplot()</code> + <code>aes()</code> — initialize plots and mappings<br>
+- Geoms: <code>geom_col()</code>, <code>geom_text()</code>, <code>geom_boxplot()</code>, <code>geom_line()</code>, <code>geom_point()</code><br>
+- Scales: <code>scale_fill_manual()</code>, <code>scale_color_manual()</code>, <code>scale_y_continuous()</code> (with <code>expansion()</code>)<br>
+- Labels &amp; theme: <code>labs()</code>, <code>theme_classic()</code>, <code>theme()</code>, <code>element_rect()</code>, <code>element_blank()</code>, <code>element_text()</code><br>
+- Faceting: <code>facet_grid()</code></p>
+</section>
+<section id="references" class="level2">
 
 
 
 
+</section>
 
-
-
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-Adu2019" class="csl-entry" role="listitem">
+Adu, M. D., Malabu, U. H., Malau-Aduli, A. E., &amp; Malau-Aduli, B. S. (2019). Enablers and barriers to effective diabetes self-management: A multi-national investigation. <em>PloS One</em>, <em>14</em>(6), e0217771. <a href="https://doi.org/10.1371/journal.pone.0217771">https://doi.org/10.1371/journal.pone.0217771</a>
+</div>
+<div id="ref-KaggleDiabetes" class="csl-entry" role="listitem">
+<em>Diabetes health indicators dataset</em>. (n.d.). <a href="https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset" class="uri">https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset</a>.
+</div>
+<div id="ref-KautzkyWiller2016" class="csl-entry" role="listitem">
+Kautzky-Willer, A., Harreiter, J., &amp; Pacini, G. (2016). Sex and gender differences in risk, pathophysiology and complications of type 2 diabetes mellitus. <em>Endocrine Reviews</em>, <em>37</em>(3), 278–316. <a href="https://doi.org/10.1210/er.2015-1137">https://doi.org/10.1210/er.2015-1137</a>
+</div>
+<div id="ref-Zhao2021" class="csl-entry" role="listitem">
+Zhao, Y., Qie, R., Han, M., Huang, S., Wu, X., et al. (2021). Association of BMI with cardiovascular disease incidence and mortality in patients with type 2 diabetes mellitus: A systematic review and dose-response meta-analysis of cohort studies. <em>Nutrition, Metabolism and Cardiovascular Diseases</em>, <em>31</em>(7), 1976–1984. <a href="https://doi.org/10.1016/j.numecd.2021.03.003">https://doi.org/10.1016/j.numecd.2021.03.003</a>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -531,4 +1164,5 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

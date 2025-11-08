@@ -15,18 +15,10 @@ csl: https://www.zotero.org/styles/apa
 ### 1. Research Question
 Diabetes is a major public health concern in the United States, affecting more than 37 million Americans—approximately 1 in 10 adults—and its prevalence continues to rise alongside increases in obesity rates. Body Mass Index (BMI) is widely recognized as a strong predictor of diabetes risk, but this relationship may not be uniform across demographic groups. In particular, sex differences in biological factors, health behaviors, and healthcare access may modify how BMI contributes to diabetes risk. Therefore, this analysis seeks to investigate how BMI and sex are associated with the likelihood of having diabetes, and whether the association between BMI and diabetes differs between males and females. By examining both main effects and the BMI-by-sex interaction, this study aims to clarify whether BMI influences diabetes risk differently across sex groups.
 
-```{r diabetes-image, echo=FALSE, message=FALSE, warning=FALSE, fig.width=7, fig.height=4.5, fig.cap="Figure 1. Word cloud of key concepts related to diabetes.", fig.align="center"}
-
-library(cowplot)
-
-
-diabetes_img <- ggdraw() +
-  draw_image("images/diabetes.jpg", scale = 1) +
-  draw_label("Source: Purdue University Center for Healthy Living", x = 0.01, y = 0.02, hjust = 0, vjust = 0,
-             size = 10, color = "white", fontface = "plain",
-             alpha = 0.9)  
-diabetes_img
-```
+<div class="figure" style="text-align: center">
+<img src="figure/diabetes-image-1.png" alt="Figure 1. Word cloud of key concepts related to diabetes."  />
+<p class="caption">Figure 1. Word cloud of key concepts related to diabetes.</p>
+</div>
 
 
 
@@ -53,10 +45,29 @@ The data used in this analysis originate from the Behavioral Risk Factor Surveil
 
 The table below describes the core variables used in this analysis after standardization. In later steps, variable names will be harmonized to ensure consistency across modeling and visualization [@Adu2019].
 
-```{r}
 
-
+``` r
 library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+``` r
 library(knitr)
 
 data_dictionary <- tibble::tribble(
@@ -70,11 +81,22 @@ kable(data_dictionary, align = "l", caption = "Table1. Standardized Variable Def
 ```
 
 
+
+Table: Table1. Standardized Variable Definitions
+
+|Variable |Type        |Units_or_Values |Description                                                                                              |
+|:--------|:-----------|:---------------|:--------------------------------------------------------------------------------------------------------|
+|diabetes |Binary      |No / Yes        |Indicator of diabetes status (1 = diabetes, 0 = no diabetes), standardized to factor with levels No/Yes. |
+|bmi      |Numeric     |kg/m^2          |Body Mass Index, calculated from height and weight, treated as a continuous predictor.                   |
+|sex      |Categorical |Female / Male   |Biological sex, standardized to a factor with two levels: Female and Male.                               |
+
+
 ### 2. Data Cleaning and Standardization
 
 This section prepares the dataset for analysis by standardizing key variables and removing implausible values.
 
-```{r}
+
+``` r
 library(readr)
 library(dplyr)
 library(tidyr)
@@ -143,10 +165,55 @@ clean <- prep %>%
   )
 
 clean
-summary(clean)
-nrow(clean)
-table(clean$bmi_group)
+```
 
+```
+## # A tibble: 253,401 × 4
+##    diabetes   bmi sex    bmi_group 
+##    <fct>    <dbl> <fct>  <fct>     
+##  1 No          40 Female Obesity   
+##  2 No          25 Female Overweight
+##  3 No          28 Female Overweight
+##  4 No          27 Female Overweight
+##  5 No          24 Female Normal    
+##  6 No          25 Male   Overweight
+##  7 No          30 Female Obesity   
+##  8 No          25 Female Overweight
+##  9 Yes         30 Female Obesity   
+## 10 No          24 Male   Normal    
+## # ℹ 253,391 more rows
+```
+
+``` r
+summary(clean)
+```
+
+```
+##  diabetes          bmi            sex               bmi_group    
+##  No :218096   Min.   :12.00   Female:141772   Underweight: 3127  
+##  Yes: 35305   1st Qu.:24.00   Male  :111629   Normal     :68953  
+##               Median :27.00                   Overweight :93749  
+##               Mean   :28.32                   Obesity    :87572  
+##               3rd Qu.:31.00                                      
+##               Max.   :80.00
+```
+
+``` r
+nrow(clean)
+```
+
+```
+## [1] 253401
+```
+
+``` r
+table(clean$bmi_group)
+```
+
+```
+## 
+## Underweight      Normal  Overweight     Obesity 
+##        3127       68953       93749       87572
 ```
 ::: callout-tip
 **Why trim BMI to [10, 80]?**  
@@ -166,40 +233,10 @@ This section focuses on the main effects of sex and BMI on diabetes prevalence. 
 
 We compare diabetes prevalence between females and males using a bar chart. This visualization highlights the main effect of sex on diabetes risk by showing the proportion of individuals diagnosed with diabetes in each group [@KautzkyWiller2016].
 
-```{r, echo=FALSE, fig.width=6, fig.height=6, fig.cap="Figure 2. Diabetes prevalence by sex.", fig.align="center"}
-
-library(dplyr)
-library(ggplot2)
-
-sex_rate <- clean %>%
-  group_by(sex) %>%
-  summarize(rate = mean(diabetes == "Yes") * 100, .groups = "drop")
-
-ggplot(sex_rate, aes(x = sex, y = rate, fill = sex)) +
-  geom_col(width = 0.4, color = "grey30", linewidth = 0.6) +
-  geom_text(aes(label = sprintf("%.1f%%", rate)), vjust = -0.5, size = 4.8) +
-  scale_fill_manual(values = c("Female" = "#F4A62A", "Male" = "grey70"), name = NULL) +
-  scale_y_continuous(limits = c(0, 25), expand = expansion(mult = c(0, 0.05))) +
-  labs(
-    title = "Diabetes Rate by Sex",
-    subtitle = "Comparison of diabetes prevalence between males and females",
-    x = "Sex",
-    y = "Diabetes Rate (%)",
-    caption = "Source: NHANES Survey (cleaned dataset)"
-  ) +
-  theme_classic(base_size = 15) +
-  theme(
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 0.6),
-    axis.line = element_blank(),
-    axis.title = element_text(face = "bold", size = 16),
-    legend.position = c(0.12, 0.88),
-    legend.background = element_rect(fill = NA),
-    plot.title = element_text(hjust = 0.5),
-    plot.subtitle = element_text(hjust = 0.5, size = 14),
-    plot.caption = element_text(hjust = 0, size = 13)
-  )
-
-```
+<div class="figure" style="text-align: center">
+<img src="figure/unnamed-chunk-3-1.png" alt="Figure 2. Diabetes prevalence by sex."  />
+<p class="caption">Figure 2. Diabetes prevalence by sex.</p>
+</div>
 
 
 
@@ -207,47 +244,10 @@ ggplot(sex_rate, aes(x = sex, y = rate, fill = sex)) +
 
 Similarly, we compare diabetes prevalence across four BMI categories using a bar chart [@Zhao2021].
 
-```{r, echo=FALSE, fig.width=6.5, fig.height=6.5, fig.cap="Figure 3. Diabetes prevalence across BMI categories.", fig.align="center"}
-library(dplyr)
-library(ggplot2)
-
-bmi_rate <- clean %>%
-  group_by(bmi_group) %>%
-  summarize(rate = mean(diabetes == "Yes") * 100, .groups = "drop") %>%
-  mutate(bmi_group = factor(bmi_group,
-                            levels = c("Underweight","Normal","Overweight","Obesity")))
-
-cols_bmi <- c(
-  "Underweight" = "#6D84A6",
-  "Normal"      = "#7EA68C", 
-  "Overweight"  = "#C49A6C",  
-  "Obesity"     = "#8A76A6"  
-)
-
-ggplot(bmi_rate, aes(x = bmi_group, y = rate, fill = bmi_group)) +
-  geom_col(width = 0.4, color = "grey30", linewidth = 0.6) +
-  geom_text(aes(label = sprintf("%.1f%%", rate)), vjust = -0.5, size = 4.8) +
-  scale_fill_manual(values = cols_bmi, name = NULL) +
-  scale_y_continuous(limits = c(0, 25), expand = expansion(mult = c(0, 0.05))) +
-  labs(
-    title = "Diabetes Rate by BMI Category",
-    subtitle = "Prevalence across four BMI groups.",
-    x = "BMI Category",
-    y = "Diabetes Rate (%)",
-    caption = "Source: NHANES Survey (cleaned dataset)"
-  ) +
-  theme_classic(base_size = 15) +
-  theme(
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 0.6),
-    axis.line = element_blank(),
-    axis.title = element_text(face = "bold", size = 16),
-    legend.position = c(0.15, 0.86),
-    legend.background = element_rect(fill = NA),
-    plot.title = element_text(hjust = 0.5),
-    plot.subtitle = element_text(hjust = 0.5, size = 14),
-    plot.caption = element_text(hjust = 0, size = 13)
-  )
-```
+<div class="figure" style="text-align: center">
+<img src="figure/unnamed-chunk-4-1.png" alt="Figure 3. Diabetes prevalence across BMI categories."  />
+<p class="caption">Figure 3. Diabetes prevalence across BMI categories.</p>
+</div>
 
 #### 1.3 Interpretation of Main Effects   
 
@@ -263,50 +263,10 @@ This section examines whether the relationship between BMI and diabetes differs 
 
 We compare BMI distributions between females and males using boxplots to examine whether the two groups differ in average BMI or variability. This helps us assess whether sex-related differences in BMI may contribute to differences in diabetes risk and ensures that BMI is on a comparable scale across groups before modeling.
 
-```{r bmi_boxplot, echo=FALSE, fig.width=6.5, fig.height=6.5, fig.cap="Figure 4. BMI distribution by sex.", fig.align="center"}
-
-library(dplyr)
-library(ggplot2)
-
-dat_bmi <- clean %>%
-  transmute(
-    Sex = factor(sex, levels = c("Female","Male")),
-    BMI = bmi
-  ) %>%
-  filter(!is.na(Sex), !is.na(BMI))
-
-cols_sex <- c("Female" = "#F4A62A", "Male" = "grey70")
-
-ggplot(dat_bmi, aes(x = Sex, y = BMI, fill = Sex)) +
-  geom_boxplot(
-    width = 0.55,
-    color = "grey30", linewidth = 0.6,
-    outlier.size = 1.4,      
-    outlier.stroke = 0.3,    
-    outlier.alpha = 0.6,     
-    outlier.colour = "grey50" 
-  ) +
-  scale_fill_manual(values = cols_sex, name = NULL) +
-  labs(
-    title = "BMI Distribution by Sex",
-    subtitle = "Comparison of BMI levels between females and males.",
-    x = "Sex",
-    y = "BMI",
-    caption = "Source: NHANES Survey (cleaned dataset)"
-  ) +
-  theme_classic(base_size = 15) +
-  theme(
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 0.6),
-    axis.line = element_blank(),
-    axis.title = element_text(face = "bold", size = 16),
-    legend.position = c(0.12, 0.9),
-    legend.background = element_rect(fill = NA),
-    plot.title = element_text(hjust = 0.5),
-    plot.subtitle = element_text(hjust = 0.5, size = 13),
-    plot.caption = element_text(hjust = 0, size = 13)
-  )
-
-```
+<div class="figure" style="text-align: center">
+<img src="figure/bmi_boxplot-1.png" alt="Figure 4. BMI distribution by sex."  />
+<p class="caption">Figure 4. BMI distribution by sex.</p>
+</div>
 
 
 #### 2.2 BMI Distribution Across BMI Categories, Faceted by Sex
@@ -314,57 +274,10 @@ ggplot(dat_bmi, aes(x = Sex, y = BMI, fill = Sex)) +
 This faceted boxplot displays BMI distributions for females and males across the four BMI categories. Each panel represents one sex, showing how BMI values vary within each group. This provides structural context on BMI composition before examining its relationship with diabetes.
 
 ::: {.column-page}
-```{r box-bmi-sex-facet, echo=FALSE, message=FALSE, warning=FALSE, fig.width=9, fig.height=6, fig.cap="Figure 5. BMI distribution across BMI categories, faceted by sex.", fig.align="center"}
-library(dplyr)
-library(ggplot2)
-
-df_box_facet <- clean %>%
-  mutate(
-    sex = factor(sex, levels = c("Female", "Male")),
-    bmi_group = factor(bmi_group,
-                       levels = c("Underweight","Normal","Overweight","Obesity"))
-  ) %>%
-  filter(!is.na(bmi), !is.na(sex), !is.na(bmi_group))
-
-ggplot(df_box_facet, aes(x = bmi_group, y = bmi, fill = bmi_group)) +
-  geom_boxplot(outlier.size = 0.7, outlier.alpha = 0.35, linewidth = 0.6) +
-  scale_fill_manual(values = c(
-    "Underweight"="#6D84A6",
-    "Normal"="#7EA68C",
-    "Overweight"="#C49A6C",
-    "Obesity"="#8A76A6"
-  ), name = NULL) +
-  
-  
-  facet_grid(~ sex, switch = "x") +
-
-  labs(
-    title = "BMI Distribution by BMI Group and Sex",
-    subtitle = "Each panel shows BMI variation across BMI categories within sex.",
-    x = "BMI Category",
-    y = "BMI",
-    caption = "Source: NHANES Survey (cleaned dataset)"
-  ) +
-  theme_classic(base_size = 15) +
-  theme(
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 0.6),
-    axis.title = element_text(face = "bold", size = 16),
-
-   
-    strip.placement = "outside",
-    strip.text.x = element_text(face = "bold", size = 15),
-    strip.background = element_rect(color = NA, fill = NA),
-
-   
-    legend.position = c(0.03, 0.97),
-    legend.justification = c("left", "top"),
-    legend.background = element_rect(fill = alpha("white", 0.6), color = NA),
-
-    plot.title = element_text(hjust = 0.5),
-    plot.subtitle = element_text(hjust = 0.5, size = 13),
-    plot.caption = element_text(hjust = 0, size = 12)
-  )
-```
+<div class="figure" style="text-align: center">
+<img src="figure/box-bmi-sex-facet-1.png" alt="Figure 5. BMI distribution across BMI categories, faceted by sex."  />
+<p class="caption">Figure 5. BMI distribution across BMI categories, faceted by sex.</p>
+</div>
 :::
 
 
@@ -373,45 +286,10 @@ ggplot(df_box_facet, aes(x = bmi_group, y = bmi, fill = bmi_group)) +
 
 This is an interaction line plot. It shows how diabetes prevalence changes across BMI categories separately for females and males. If the two lines are not parallel, this indicates a Sex × BMI interaction — meaning the effect of BMI on diabetes risk differs by sex.
 
-```{r inter-line, echo=FALSE, message=FALSE, warning=FALSE,fig.width=6.5, fig.height=5.8,fig.cap="Figure 6. Diabetes rate across BMI categories by sex (interaction plot).",fig.align="center"}
-
-
-library(dplyr)
-library(ggplot2)
-
-df_inter <- clean %>%
-mutate(
-bmi_group = factor(bmi_group, levels = c("Underweight","Normal","Overweight","Obesity")),
-sex = factor(sex, levels = c("Female","Male"))
-) %>%
-group_by(sex, bmi_group) %>%
-summarize(rate = mean(diabetes == "Yes") * 100, .groups = "drop")
-
-ggplot(df_inter, aes(x = bmi_group, y = rate, group = sex, color = sex)) +
-geom_line(linewidth = 1.2) +
-geom_point(size = 3) +
-scale_color_manual(values = c(Female = "#F4A62A", Male = "grey60"), name = NULL) +
-scale_y_continuous(limits = c(0, 25), expand = expansion(mult = c(0, 0.02))) +
-labs(
-title = "BMI Interaction: Diabetes Rate Across BMI Categories",
-subtitle = "Lines compare diabetes prevalence across BMI groups for females vs. males",
-x = "BMI Category",
-y = "Diabetes Rate (%)",
-caption = "Source: NHANES Survey (cleaned dataset)"
-) +
-theme_classic(base_size = 15) +
-theme(
-panel.border   = element_rect(color = "black", fill = NA, linewidth = 0.6),
-axis.line      = element_blank(),
-axis.title     = element_text(face = "bold", size = 16),
-axis.text      = element_text(color = "black", size = 12),
-plot.title     = element_text(hjust = 0.5, size = 16, face = "bold"),
-plot.subtitle  = element_text(hjust = 0.5, size = 13),
-plot.caption   = element_text(hjust = 0,  size = 12),
-legend.position = c(0.15, 0.86),
-legend.background = element_rect(fill = NA)
-)
-```
+<div class="figure" style="text-align: center">
+<img src="figure/inter-line-1.png" alt="Figure 6. Diabetes rate across BMI categories by sex (interaction plot)."  />
+<p class="caption">Figure 6. Diabetes rate across BMI categories by sex (interaction plot).</p>
+</div>
 
 
 #### 2.4 Interpratation of Interaction
@@ -429,7 +307,8 @@ While the descriptive plots show that diabetes prevalence tends to be higher amo
 
 #### 3.1 Model Specification and ANOVA Output
 
-```{r}
+
+``` r
 library(dplyr)
 
 dat_anova <- clean %>%
@@ -443,62 +322,91 @@ na.omit()
 fit_aov <- aov(diabetes_num ~ sex * bmi_group, data = dat_anova)
 
 summary(fit_aov)
+```
+
+```
+##                   Df Sum Sq Mean Sq F value Pr(>F)    
+## sex                1     30    30.0  261.69 <2e-16 ***
+## bmi_group          3   1319   439.6 3837.32 <2e-16 ***
+## sex:bmi_group      3      9     3.0   26.34 <2e-16 ***
+## Residuals     253393  29028     0.1                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+``` r
 anova(fit_aov)
 ```
 
-#### 3.2 Two-Way ANOVA Summary Table
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(dplyr)
-library(knitr)
-
-
-aov_tab <- as.data.frame(anova(fit_aov))
-aov_tab$Term <- rownames(aov_tab)
-aov_tab <- aov_tab[, c("Term","Df","Sum Sq","Mean Sq","F value","Pr(>F)")]
-
-
-aov_tab$Term <- dplyr::recode(
-  aov_tab$Term,
-  "sex"           = "A: Sex",
-  "bmi_group"     = "B: BMI group",
-  "sex:bmi_group" = "A × B",
-  "Residuals"     = "Residuals"
-)
-
-
-total_row <- data.frame(
-  Term     = "Total",
-  Df       = sum(aov_tab$Df, na.rm = TRUE),
-  `Sum Sq` = sum(aov_tab$`Sum Sq`, na.rm = TRUE),
-  `Mean Sq`= NA_real_,
-  `F value`= NA_real_,
-  `Pr(>F)` = NA_real_,
-  check.names = FALSE
-)
-
-
-tri_tab <- rbind(aov_tab, total_row)
-
-
-library(kableExtra)
-
-tri_tab |>
-  knitr::kable(
-    col.names = c("Term","Df","Sum Sq","Mean Sq","F value","Pr(>F)"),
-    digits    = c(NA, 0, 4, 6, 2, 3),
-    align     = c("l","r","r","r","r","r"),
-    caption   = "Table 2. Two-way ANOVA Summary for Diabetes Prevalence",
-    booktabs  = TRUE,
-    row.names = FALSE
-  ) |>
-  kable_styling(
-    full_width = FALSE,
-    position = "center",
-    font_size = 18  
-  ) |>
-  row_spec(0, bold = TRUE, background = "#f2f2f2")   
-
 ```
+## Analysis of Variance Table
+## 
+## Response: diabetes_num
+##                   Df  Sum Sq Mean Sq  F value    Pr(>F)    
+## sex                1    30.0   29.98  261.695 < 2.2e-16 ***
+## bmi_group          3  1318.8  439.60 3837.323 < 2.2e-16 ***
+## sex:bmi_group      3     9.1    3.02   26.339 < 2.2e-16 ***
+## Residuals     253393 29028.3    0.11                       
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+#### 3.2 Two-Way ANOVA Summary Table
+<table class="table" style="font-size: 18px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">Table 2. Two-way ANOVA Summary for Diabetes Prevalence</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;"> Term </th>
+   <th style="text-align:right;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;"> Df </th>
+   <th style="text-align:right;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;"> Sum Sq </th>
+   <th style="text-align:right;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;"> Mean Sq </th>
+   <th style="text-align:right;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;"> F value </th>
+   <th style="text-align:right;font-weight: bold;background-color: rgba(242, 242, 242, 255) !important;"> Pr(&gt;F) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> A: Sex </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 29.9794 </td>
+   <td style="text-align:right;"> 29.979421 </td>
+   <td style="text-align:right;"> 261.70 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B: BMI group </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1318.7937 </td>
+   <td style="text-align:right;"> 439.597893 </td>
+   <td style="text-align:right;"> 3837.32 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> A × B </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 9.0519 </td>
+   <td style="text-align:right;"> 3.017306 </td>
+   <td style="text-align:right;"> 26.34 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Residuals </td>
+   <td style="text-align:right;"> 253393 </td>
+   <td style="text-align:right;"> 29028.3190 </td>
+   <td style="text-align:right;"> 0.114558 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Total </td>
+   <td style="text-align:right;"> 253400 </td>
+   <td style="text-align:right;"> 30386.1440 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+</tbody>
+</table>
 
 
 #### 3.3 Interpretation of Results

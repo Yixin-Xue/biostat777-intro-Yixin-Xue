@@ -1,0 +1,55 @@
+---
+title: "Home"
+format:
+  html:
+    toc: false
+---
+
+
+<style>
+  .intro-row {
+    display: flex;
+    align-items: flex-start;         
+    justify-content: flex-start;
+    gap: 0px;                      
+    max-width: 1000px;             
+    margin: 0 auto 40px;            
+    padding: 20px;
+  }
+
+  .intro-img {
+    width: 60%;                      
+    border-radius: 20px;
+    margin: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.1);
+  }
+
+  .intro-text {
+    max-width: 130%;                  
+    font-size: 1.2em;                
+    line-height: 1.8;               
+  }
+
+ 
+  @media (max-width: 900px) {
+    .intro-row { flex-direction: column; gap: 12px; }
+    .intro-img { width: 100%; max-width: 420px; }
+    .intro-text { max-width: none; }
+  }
+</style>
+
+# <span style="font-family:'Brush Script MT', cursive; font-size: 2.4em; color:#1b3a57;">Welcome!</span>
+
+## <span style="display:inline-block; padding-left:5px;">Yixin Xue</span>
+
+::: {.intro-row}
+<img src="images/me.jpg" alt="Yixin baking bread rolls" class="intro-img" />
+
+<div class="intro-text">
+  <br>
+💙 Hello Everyone!  
+📖 I am a first year MHS student in Health, Behavior and Society.  
+🌏 My hometown is Shanghai, China.  
+🥐 In my free time, I enjoy exploring esports, spending time outdoors, and baking.
+</div>
+:::

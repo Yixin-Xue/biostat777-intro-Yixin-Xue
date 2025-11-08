@@ -1,27 +1,29 @@
 project:
   type: website
   output-dir: _site_build
-  resources:
-    - images/
-
+  render:
+    - index.md
+    - about.md
+    - analysis.md
+    - "!*.qmd"     # 显式排除所有 .qmd，防止 Quarto 去执行 R
 
 website:
   title: "biostat777-intro-yixin-xue"
   navbar:
     left:
-      - href: index.qmd
+      - href: index.md
         text: Home
-      - href: about.qmd
+      - href: about.md
         text: About
-      - href: analysis.qmd
+      - href: analysis.md
         text: Example analysis
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    theme: cosmo
     css: styles.css
-
-
-
+    toc: true
+    toc-location: right
+    toc-title: "On this page"
+    toc-depth: 3
+    smooth-scroll: true
