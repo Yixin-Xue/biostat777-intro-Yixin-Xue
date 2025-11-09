@@ -16,3 +16,6 @@ The website has been successfully deployed online and is available at:
 This website contains my example data analysis project, including data description, data cleaning, visualization, statistical modeling, interpretation of results, and references.
 
 ---
+
+## Note
+I used 1 free late day for project1.
